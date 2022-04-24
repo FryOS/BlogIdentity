@@ -75,6 +75,7 @@ namespace BlogIdentity.Areas.Identity.Pages.Account
             {
                 await _roleManager.CreateAsync(new IdentityRole(WebConstants.AdminRole));
                 await _roleManager.CreateAsync(new IdentityRole(WebConstants.Moderator));
+                await _roleManager.CreateAsync(new IdentityRole(WebConstants.UserRole));
             };
 
             ReturnUrl = returnUrl;
@@ -96,7 +97,14 @@ namespace BlogIdentity.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(user, WebConstants.AdminRole);    
+                    if (User.IsInRole(WebConstants.AdminRole))
+                    {
+                        await _userManager.AddToRoleAsync(user, WebConstants.AdminRole);
+                    } 
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(user, WebConstants.UserRole);
+                    }                    
 
                     _logger.LogInformation("User created a new account with password.");
 
@@ -117,7 +125,14 @@ namespace BlogIdentity.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        if (!User.IsInRole(WebConstants.AdminRole))
+                        {
+                            await _signInManager.SignInAsync(user, isPersistent: false);
+                        }
+                        else
+                        {
+                            return RedirectToAction("Index");
+                        }
                         return LocalRedirect(returnUrl);
                     }
                 }
