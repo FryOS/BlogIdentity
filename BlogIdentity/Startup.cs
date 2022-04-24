@@ -28,7 +28,7 @@ namespace BlogIdentity
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<IdentityUser>  (
+            services.AddIdentity<IdentityUser, IdentityRole> (
                 opts =>
                 {
                     opts.Password.RequiredLength = 6;
@@ -37,7 +37,7 @@ namespace BlogIdentity
                     opts.Password.RequireUppercase = false;
                     opts.Password.RequireDigit = false;
 
-                }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
+                }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders().AddDefaultUI();
 
 
             services.AddControllersWithViews();

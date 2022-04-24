@@ -2,8 +2,8 @@
 {
     public class WebConstants
     {
-        public string AdminRole = "admin";
-        public string Moderator = "moderator";
-        public string UserRole = "user";
+        public const string AdminRole = "admin";
+        public const string Moderator = "moderator";
+        public const string UserRole = "user";
     }
 }
