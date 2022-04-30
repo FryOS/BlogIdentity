@@ -1,4 +1,4 @@
-﻿@model BlogIdentity.Models.Article
+﻿@model  BlogIdentity.Models.NewArticleViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -14,9 +14,25 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
+                
+                <label asp-for="Articles.Title" class="control-label"></label>
+                <input asp-for="Articles.Title" class="form-control" />
+                <label asp-for="Articles.Content" class="control-label"></label>                
+                <textarea asp-for="Articles.Content" class="control-label"></textarea>
+                <span asp-validation-for="Articles.Title" class="text-danger"></span>
+
+                <label asp-for="TagsList">:</label><br />             
+               
+                @foreach( var item in Model.TagsList)
+                    {
+                      <tr>
+                        <td class="js-export-checkbox">
+                           <input  type="checkbox"  />
+                                    @item.TagName          
+                        </td>
+                      </tr>
+                    }
+                
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

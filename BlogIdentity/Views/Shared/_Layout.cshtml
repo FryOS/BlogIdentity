@@ -22,23 +22,29 @@
 
                     <ul class="navbar-nav flex-grow-1">                        
                         
-                        @if (User.IsInRole(WebConstants.AdminRole))
+                        @if (User.IsInRole(WebConstants.UserRole))
                         {
                             <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Articles" asp-action="Index">Статьи</a>
+                            <a class="nav-link text-dark" asp-area="Identity" asp-controller="Articles" asp-action="Index">Статьи</a>
                             </li>
                             <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Tags" asp-action="Index">Тэги</a>
+                            <a class="nav-link text-dark" asp-area="Identity" asp-controller="Tags" asp-action="Index">Тэги</a>
                             </li>
                             <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Comments" asp-action="Index">Комментарии</a>
-                            </li>
-                            
-                            <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Identity" asp-controller="Comments" asp-action="Index">Комментарии</a>
+                            </li>  
+                        }      
+                     
+                          
+
+                        @if (User.IsInRole(WebConstants.AdminRole))
+                        {
+                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Manage Roles</a>
                             </li>
+
                         }
-                        
+
                     </ul>
                 </div>
             </div>

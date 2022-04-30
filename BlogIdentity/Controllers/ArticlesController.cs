@@ -7,12 +7,14 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BlogIdentity;
 using BlogIdentity.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BlogIdentity.Controllers
 {
-    
+    //[Authorize(Roles = WebConstants.UserRole)]
     public class ArticlesController : Controller
     {
+        // TODO: сделать чекбокс тегов
         private readonly AppDbContext _context;
 
         public ArticlesController(AppDbContext context)
@@ -47,7 +49,13 @@ namespace BlogIdentity.Controllers
         // GET: Articles/Create
         public IActionResult Create()
         {
-            return View();
+            NewArticleViewModel newArticle = new NewArticleViewModel()
+            {
+                Articles = new Article(),
+                TagsList = _context.Tags
+            };            
+
+            return View(newArticle);
         }
 
         // POST: Articles/Create
@@ -55,11 +63,13 @@ namespace BlogIdentity.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title")] Article article)
+
+        //[Bind("Id,Title")]
+        public async Task<IActionResult> Create( NewArticleViewModel article)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(article);
+                _context.Articles.Add(article.Articles);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

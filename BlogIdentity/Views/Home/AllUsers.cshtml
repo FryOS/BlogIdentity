@@ -1,0 +1,15 @@
+﻿@model  IEnumerable<BlogIdentity.Models.ApplicationUser>
+@{
+    ViewData["Title"] = "AllUsers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>AllUsers</h1>
+
+@foreach(var user in Model)
+{
+    <ul>
+        <li>@user.FullName</li>
+    </ul>
+}        
+

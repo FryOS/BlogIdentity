@@ -13,6 +13,7 @@ namespace BlogIdentity.Models
         [Required]
         [Display(Name = "Имя статьи")]
         public string Title { get; set; }
+        public string Content { get; set; }
 
         public List<Tag> Tags { get; set; }
         
