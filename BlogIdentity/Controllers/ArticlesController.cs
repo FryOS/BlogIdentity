@@ -70,6 +70,7 @@ namespace BlogIdentity.Controllers
             if (ModelState.IsValid)
             {
                 _context.Articles.Add(article.Articles);
+                
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
